@@ -1,4 +1,5 @@
 ﻿using Avansight._Web.Models;
+using Avansight.Service.Implimentation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,15 +13,15 @@ namespace Avansight._Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger )
         {
             _logger = logger;
         }
-
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("StudySelector", "Study");
         }
 
         public IActionResult Privacy()
