@@ -3,11 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avansight. Web", "Avansight. Web\Avansight. Web.csproj", "{71D29B56-9139-429A-A3D3-EBFD0ACC86AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avansight. Web", "Avansight. Web\Avansight. Web.csproj", "{71D29B56-9139-429A-A3D3-EBFD0ACC86AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avansight.Domain", "Avansight.Domain\Avansight.Domain.csproj", "{5BD6821A-7B24-4A59-9489-6338E673E143}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avansight.Domain", "Avansight.Domain\Avansight.Domain.csproj", "{5BD6821A-7B24-4A59-9489-6338E673E143}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avansight.Service", "Avansight. Service\Avansight.Service.csproj", "{8BAC21F2-7ADD-4708-BDB0-67E8B2D76B0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avansight.Service", "Avansight. Service\Avansight.Service.csproj", "{8BAC21F2-7ADD-4708-BDB0-67E8B2D76B0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{749F2829-8108-45A5-BCC9-330BEABA59D5}"
+	ProjectSection(SolutionItems) = preProject
+		SQL\InitQuery.sql = SQL\InitQuery.sql
+		SQL\Sp_PatientGet.sql = SQL\Sp_PatientGet.sql
+		SQL\Sp_PatientSet.sql = SQL\Sp_PatientSet.sql
+		SQL\StudyImport.sql = SQL\StudyImport.sql
+		SQL\TreatmentGroupImport.sql = SQL\TreatmentGroupImport.sql
+		SQL\Trigger_ForPatient.sql = SQL\Trigger_ForPatient.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
