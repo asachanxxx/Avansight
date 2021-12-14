@@ -15,7 +15,8 @@ namespace Avansight.Service.Implimentation
         public DapperContext(IConfiguration configuration)
         {
             _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("Database");
+            //_connectionString = _configuration.GetConnectionString("RazorPagesMovieContext");
+            _connectionString = _configuration.GetSection("SqlConnection").GetSection("connectionString").Value;
         }
         public SqlConnection CreateConnection()
         {

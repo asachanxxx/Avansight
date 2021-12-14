@@ -6,5 +6,6 @@ namespace Avansight.Service.Implimentation
     public interface IStudyService
     {
         List<Study> GetAll();
+        Study GetStudy(int id);
     }
 }

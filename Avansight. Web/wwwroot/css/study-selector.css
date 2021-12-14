@@ -2,6 +2,14 @@
 {
     margin: 10px auto;
 }
+.error {
+    color: red;
+    margin-left: 5px;
+}
+
+label.error {
+    display: inline;
+}
 
 .card 
 {
@@ -11,4 +19,15 @@
 .row-scroll {
     height: 500px;
     overflow-y: scroll;
+}
+
+.btn-gen-patients {
+
+}
+.frm-genarate-patient{
+
+}
+
+.display-none {
+    display: none;
 }

@@ -1,4 +1,5 @@
-﻿using Avansight.Service.Implimentation;
+﻿using Avansight.Domain;
+using Avansight.Service.Implimentation;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace Avansight._Web.Controllers
         [Route("Study/Index/{id}")]
         public IActionResult Index(int id)
         {
+            HttpContext.Session.SetObjectAsJson("studyObject", _studyService.GetStudy(id));
+            var sessionStudy = HttpContext.Session.GetObjectFromJson<Study>("studyObject");
             return View();
         }
 

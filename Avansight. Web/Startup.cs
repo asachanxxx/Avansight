@@ -30,6 +30,9 @@ namespace Avansight._Web
             services.AddSingleton<DapperContext>();
             services.AddSingleton<IStudyService, StudyService>();
             services.AddSingleton<IPatientService, PatientService>();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromDays(1);
+            });
 
         }
 
@@ -52,7 +55,7 @@ namespace Avansight._Web
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -2,6 +2,7 @@
     ViewData["Title"] = "Patients";
     Layout = "~/Views/Shared/_StudyLayout.cshtml";
 }
+@model Avansight.Domain.ViewModels.PatientViewModel;
 
 <div class="study-selector-container">
     <div class="row">
@@ -11,12 +12,12 @@
                     <p class="mb-0">Patients Upload</p>
                 </div>
                 <div class="card-body">
-                    <form method="POST" asp-controller="Patient" asp-action="Index" class="form-horizontal" id="contact-form">
+                    <form method="POST" asp-controller="Patient" asp-action="Index" class="form-horizontal frm-genarate-patient" id="contact-form">
 
                         <div class="form-group row">
                             <label class="control-label col-sm-2" for="email">Sample Size</label>
                             <div class="col-sm-5">
-                                <input type="email" class="form-control" id="samplesize" placeholder="Sample Size">
+                                <input type="number" class="form-control ipt-sample-size" asp-for="SampleSize" id="samplesize" name="samplesize" placeholder="Sample Size">
                             </div>
                         </div>
 
@@ -26,9 +27,9 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-6" for="MaleWeight">Male(Weight)</label>
+                                            <label class="control-label col-sm-6" asp-for="MaleWight" for="MaleWeight">Male(Weight)</label>
                                             <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="maleweight">
+                                                <input type="number" class="form-control ipt-male-w" asp-for="MaleWight" id="maleweight">
                                             </div>
                                         </div>
                                     </div>
@@ -36,7 +37,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-sm-6" for="FeMaleWeight">FeMale(Weight)</label>
                                             <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="feMaleweight">
+                                                <input type="number" class="form-control ipt-female-w" asp-for="FMaleWight"  id="feMaleweight">
                                             </div>
                                         </div>
                                     </div>
@@ -51,41 +52,41 @@
 
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-12" for="age-20-30">(20-30)</label>
+                                            <label class="control-label col-sm-12" for="age-20-30">@ViewBag.enums[0]</label>
                                             <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="age-20-30">
+                                                <input type="number" class="form-control ipt-age-2030" asp-for="Age2030" id="age-20-30">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-12" for="age-21-40">(31-40)</label>
+                                            <label class="control-label col-sm-12" for="age-21-40">@ViewBag.enums[1]</label>
                                             <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="age-21-30">
+                                                <input type="number" class="form-control ipt-age-3140" asp-for="Age3140" id="age-31-40">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-12" for="age-41-50">(41-50)</label>
+                                            <label class="control-label col-sm-12" for="age-41-50">@ViewBag.enums[2]</label>
                                             <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="age-41-50">
+                                                <input type="number" class="form-control ipt-age-4150" asp-for="Age4150" id="age-41-50">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-12" for="age-51-60">(51-60)</label>
+                                            <label class="control-label col-sm-12" for="age-51-60">@ViewBag.enums[3]</label>
                                             <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="age-51-60">
+                                                <input type="number" class="form-control ipt-age-5160" asp-for="Age5160" id="age-51-60">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-12" for="age-61-70">(61-70)</label>
+                                            <label class="control-label col-sm-12" for="age-61-70">@ViewBag.enums[4]</label>
                                             <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="age-61-70">
+                                                <input type="number" class="form-control ipt-age-6170" asp-for="Age6170" id="age-61-70">
                                             </div>
                                         </div>
                                     </div>
@@ -95,7 +96,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-default">Genarate Patients</button>
+                                <button type="submit" class="btn btn-info btn-gen-patients">Genarate Patients</button>
                             </div>
                         </div>
                     </form>
@@ -107,10 +108,15 @@
 
 @section scripts
 {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/js/vm/patient-import.js"></script>
     <script type="text/javascript">
         $(function () {
-
+            ctsFunctions.init();
         });
     </script>
 }
