@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/study-selector.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
+    <link rel="stylesheet" href="~/lib/ion-rangeSlider/css/ion.rangeSlider.min.css" />
+
+
+
 </head>
 <body>
     <header>
@@ -19,7 +24,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Study" asp-action="StudySelector">Studies</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Study" asp-action="Index">Studies</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Index">Patient Upload</a>
@@ -41,6 +46,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/font-awesome/js/all.js"></script>
+    <script src="~/lib/ion-rangeSlider/js/ion.rangeSlider.min.js"></script>
+    <script src="~/lib/jquery-selectallcheckbox/jquery.selectallcheckbox.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

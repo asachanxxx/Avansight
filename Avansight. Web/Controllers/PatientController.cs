@@ -30,11 +30,18 @@ namespace Avansight._Web.Controllers
         [HttpPost]
         public IActionResult Index(PatientViewModel patientViewModel)
         {
-            _patientService.ProcessPatients(patientViewModel);
-            ViewBag.enums = GenaralHelpers.GetDisplayNames(new AgeGroups());
+            if (ModelState.IsValid)
+            {
+                var listOfPatients = _patientService.ProcessPatients(patientViewModel);
+                var saveDone = _patientService.PatientsSet(listOfPatients);
+                if (saveDone)
+                {
+                    HttpContext.Session.SetObjectAsJson("genaratedPatients", listOfPatients);
+                    ViewBag.enums = GenaralHelpers.GetDisplayNames(new AgeGroups());
+                    return RedirectToAction("Index", "Study", new { StudyId = 4 });
+                }
+            }
             return View();
         }
-
-      
     }
 }

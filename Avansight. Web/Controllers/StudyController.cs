@@ -17,10 +17,16 @@ namespace Avansight._Web.Controllers
         }
 
         [HttpGet]
-        [Route("Study/Index/{id}")]
-        public IActionResult Index(int id)
+        public IActionResult Index()
         {
-            HttpContext.Session.SetObjectAsJson("studyObject", _studyService.GetStudy(id));
+            return View();
+        }
+
+        [HttpGet]
+        [Route("Study/{StudyId}")]
+        public IActionResult Index(int StudyId)
+        {
+            HttpContext.Session.SetObjectAsJson("studyObject", _studyService.GetStudy(StudyId));
             var sessionStudy = HttpContext.Session.GetObjectFromJson<Study>("studyObject");
             return View();
         }

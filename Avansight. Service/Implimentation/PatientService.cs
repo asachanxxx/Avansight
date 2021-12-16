@@ -1,5 +1,7 @@
 ﻿using Avansight.Domain;
+using Avansight.Domain.Factories;
 using Avansight.Domain.ViewModels;
+using Dapper;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -21,7 +23,24 @@ namespace Avansight.Service.Implimentation
             return _service.Query<PatientService>("", null, commandType: System.Data.CommandType.StoredProcedure).ToList();
         }
 
-        public void ProcessPatients(PatientViewModel patientViewModel)
+        public bool PatientsSet(List<Patient> patients)
+        {
+            var dataTable = DataTableFactory.GetPatientTable();
+            foreach (var item in patients)
+            {
+                var row = dataTable.NewRow();
+                row["PatientId"] = item.PatientId;
+                row["Age"] = item.Age;
+                row["Gender"] = item.Gender;
+                row["StudyId"] = item.StudyId;
+                row["TreatmentId"] = item.TreatmentId;
+                dataTable.Rows.Add(row);
+            }
+            _service.Execute("[cts].[Sp_PatientSet]",new { Patients = dataTable.AsTableValuedParameter("[cts].[PatientTableType]") },commandType:System.Data.CommandType.StoredProcedure);
+            return true;
+        }
+
+        public List<Patient> ProcessPatients(PatientViewModel patientViewModel)
         {
             List<Patient> globalPatients = new List<Patient>();
 
@@ -89,14 +108,15 @@ namespace Avansight.Service.Implimentation
                 {
                     item.TreatmentId = 1;
                 }
-                else {
+                else
+                {
                     item.TreatmentId = 2;
                 }
                 counter++;
             }
 
             var p = globalPatients;
-         //   _service.Query<PatientService>("", null, commandType: System.Data.CommandType.StoredProcedure).ToList();
+            return globalPatients;
         }
 
     }

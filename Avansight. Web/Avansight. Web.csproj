@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Avansight.Domain\Avansight.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\ion-rangeSlider\" />
+  </ItemGroup>
+
 </Project>

@@ -13,31 +13,34 @@
                 </div>
                 <div class="card-body">
                     <form method="POST" asp-controller="Patient" asp-action="Index" class="form-horizontal frm-genarate-patient" id="contact-form">
-
+                        <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group row">
-                            <label class="control-label col-sm-2" for="email">Sample Size</label>
+                            <label class="control-label col-sm-2" asp-for="SampleSize"></label>
                             <div class="col-sm-5">
-                                <input type="number" class="form-control ipt-sample-size" asp-for="SampleSize" id="samplesize" name="samplesize" placeholder="Sample Size">
+                                <input class="form-control ipt-sample-size" asp-for="SampleSize">
+                                <span asp-validation-for="SampleSize" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="control-label col-sm-2" for="pwd">Gender:</label>
+                            <label class="control-label col-sm-2" for="pwd">Gender </label>
                             <div class="col-sm-10">
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-6" asp-for="MaleWight" for="MaleWeight">Male(Weight)</label>
+                                            <label class="control-label col-sm-6" asp-for="MaleWight" for="MaleWeight"></label>
                                             <div class="col-sm-12">
                                                 <input type="number" class="form-control ipt-male-w" asp-for="MaleWight" id="maleweight">
+                                                <span asp-validation-for="MaleWight" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-6" for="FeMaleWeight">FeMale(Weight)</label>
+                                            <label class="control-label col-sm-6" asp-for="FMaleWight"></label>
                                             <div class="col-sm-12">
-                                                <input type="number" class="form-control ipt-female-w" asp-for="FMaleWight"  id="feMaleweight">
+                                                <input type="number" class="form-control ipt-female-w" asp-for="FMaleWight" id="feMaleweight">
+                                                <span asp-validation-for="FMaleWight" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -55,6 +58,7 @@
                                             <label class="control-label col-sm-12" for="age-20-30">@ViewBag.enums[0]</label>
                                             <div class="col-sm-12">
                                                 <input type="number" class="form-control ipt-age-2030" asp-for="Age2030" id="age-20-30">
+                                                <span asp-validation-for="Age2030" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -63,6 +67,7 @@
                                             <label class="control-label col-sm-12" for="age-21-40">@ViewBag.enums[1]</label>
                                             <div class="col-sm-12">
                                                 <input type="number" class="form-control ipt-age-3140" asp-for="Age3140" id="age-31-40">
+                                                <span asp-validation-for="Age3140" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -71,6 +76,7 @@
                                             <label class="control-label col-sm-12" for="age-41-50">@ViewBag.enums[2]</label>
                                             <div class="col-sm-12">
                                                 <input type="number" class="form-control ipt-age-4150" asp-for="Age4150" id="age-41-50">
+                                                <span asp-validation-for="Age4150" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -79,6 +85,7 @@
                                             <label class="control-label col-sm-12" for="age-51-60">@ViewBag.enums[3]</label>
                                             <div class="col-sm-12">
                                                 <input type="number" class="form-control ipt-age-5160" asp-for="Age5160" id="age-51-60">
+                                                <span asp-validation-for="Age5160" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -87,6 +94,7 @@
                                             <label class="control-label col-sm-12" for="age-61-70">@ViewBag.enums[4]</label>
                                             <div class="col-sm-12">
                                                 <input type="number" class="form-control ipt-age-6170" asp-for="Age6170" id="age-61-70">
+                                                <span asp-validation-for="Age6170" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -108,11 +116,7 @@
 
 @section scripts
 {
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
     <script src="~/js/vm/patient-import.js"></script>
     <script type="text/javascript">
         $(function () {

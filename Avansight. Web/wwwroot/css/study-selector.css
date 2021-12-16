@@ -31,3 +31,8 @@ label.error {
 .display-none {
     display: none;
 }
+
+#chartdiv {
+    width: 100%;
+    height: 50vh;
+}

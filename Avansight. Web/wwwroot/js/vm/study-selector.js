@@ -77,6 +77,6 @@ var ctsFunctions = (function () {
     }
     return {
         init,
-        loadStudyData
+        loadStudyData,
     }
 })();

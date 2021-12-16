@@ -1,1 +1,132 @@
-﻿<h1>Study Home</h1>
+﻿@{
+    ViewData["Title"] = "Gender Distribution";
+    Layout = "~/Views/Shared/_StudyLayout.cshtml";
+}
+
+<div class="study-selector-container">
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h3 class="w-75">Gender Distribution</h3>
+                        </div>
+                        <div class="col-md-2 float-right">
+                            <button class="btn btn-dark btn-menu-toggle"><i class="fas fa-bars"></i> </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="chartdiv"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 subject-selector">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>
+                                Subject Selector
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="text-success">
+                                Found 196 Subjects
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>
+                                <strong>Age</strong>
+                                <div class="form-check">
+                                    <input class="form-check-input rdo-allages" type="radio" name="rdoAge" id="exampleRadios1" value="a" checked>
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        All Ages
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input rdo-between" type="radio" name="rdoAge" id="exampleRadios2" value="b">
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Between
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="mt-1 mb-1">
+                                <input type="text" class="year-slider" name="my_range" value="" />
+                            </div>
+
+                            <div class="mb-1">
+                                <strong>Treatment Group</strong>
+                                <div class="form-check">
+                                    <input class="form-check-input chktg-selectTGroup" type="checkbox" name="chktg" id="selectTGroup" value="a" checked>
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        DrugX
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input chktg-DrugX" type="checkbox" name="chktg" id="chktg_a" value="a" checked>
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        DrugX
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input chktg-DrugZ" type="checkbox" name="chktg" id="chktg_b">
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        DrugZ
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input chktg-DrugA12" type="checkbox" name="chktg" id="chktg_c">
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        DrugA12
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input chktg-DrugXM" type="checkbox" name="chktg" id="chktg_d">
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        DrugXM
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="card-header">
+                        <button class="btn btn-dark"> Cancel </button>
+                        <button class="btn btn-success"> Cancel </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/lib/amcharts4/index.js"></script>
+    <script src="~/lib/amcharts4/xy.js"></script>
+    <script src="~/lib/amcharts4/themes/Animated.js"></script>
+    <script src="~/js/vm/patient-index.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            ctsFunctions.init();
+            ctsFunctions.loadChart();
+        });
+    </script>
+}

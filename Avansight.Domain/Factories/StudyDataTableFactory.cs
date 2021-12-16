@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Avansight.Domain.Factories
 {
-    public class StudyDataTableFactory
+    public class DataTableFactory
     {
         public static DataTable GetStudyTable()
         {
