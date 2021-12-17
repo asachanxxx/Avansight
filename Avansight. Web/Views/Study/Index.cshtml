@@ -24,7 +24,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-4 subject-selector">
             <div class="card">
                 <div class="card-header">
@@ -41,7 +40,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
@@ -64,35 +62,34 @@
                             <div class="mt-1 mb-1">
                                 <input type="text" class="year-slider" name="my_range" value="" />
                             </div>
-
                             <div class="mb-1">
                                 <strong>Treatment Group</strong>
                                 <div class="form-check">
-                                    <input class="form-check-input chktg-selectTGroup" type="checkbox" name="chktg" id="selectTGroup" value="a" checked>
+                                    <input class="form-check-input chktg-selectTGroup" type="checkbox">
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        All
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input chktg-DrugX" type="checkbox" name="chktg" id="DrugX">
                                     <label class="form-check-label" for="exampleRadios1">
                                         DrugX
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input chktg-DrugX" type="checkbox" name="chktg" id="chktg_a" value="a" checked>
-                                    <label class="form-check-label" for="exampleRadios1">
-                                        DrugX
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input chktg-DrugZ" type="checkbox" name="chktg" id="chktg_b">
+                                    <input class="form-check-input chktg-DrugZ" type="checkbox" name="chktg" id="DrugZ">
                                     <label class="form-check-label" for="exampleRadios2">
                                         DrugZ
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input chktg-DrugA12" type="checkbox" name="chktg" id="chktg_c">
+                                    <input class="form-check-input chktg-DrugA12" type="checkbox" name="chktg" id="DrugA12">
                                     <label class="form-check-label" for="exampleRadios2">
                                         DrugA12
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input chktg-DrugXM" type="checkbox" name="chktg" id="chktg_d">
+                                    <input class="form-check-input chktg-DrugXM" type="checkbox" name="chktg" id="DrugXM">
                                     <label class="form-check-label" for="exampleRadios2">
                                         DrugXM
                                     </label>
@@ -100,15 +97,36 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-
+                            <strong>Gender</strong>
+                            <div class="form-check">
+                                <input class="form-check-input chkGen-select" type="checkbox">
+                                <label class="form-check-label" for="exampleRadios1">
+                                    All
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input chktg-DrugX" type="checkbox" name="chkGen" id="Male">
+                                <label class="form-check-label" for="exampleRadios1">
+                                    Male
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input chktg-DrugZ" type="checkbox" name="chkGen" id="Female">
+                                <label class="form-check-label" for="exampleRadios2">
+                                    Female
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input chktg-DrugA12" type="checkbox" name="chkGen" id="Other">
+                                <label class="form-check-label" for="exampleRadios2">
+                                    Other
+                                </label>
+                            </div>
                         </div>
-
-
                     </div>
-
                     <div class="card-header">
-                        <button class="btn btn-dark"> Cancel </button>
-                        <button class="btn btn-success"> Cancel </button>
+                        <button class="btn btn-dark btn-cancel"> Cancel </button>
+                        <button class="btn btn-success btn-apply"> Apply </button>
                     </div>
                 </div>
             </div>
@@ -119,14 +137,14 @@
 
 @section Scripts
 {
-    <script src="~/lib/amcharts4/index.js"></script>
-    <script src="~/lib/amcharts4/xy.js"></script>
-    <script src="~/lib/amcharts4/themes/Animated.js"></script>
+    <script src="~/lib/amchart/core.js"></script>
+    <script src="~/lib/amchart/charts.js"></script>
+    <script src="~/lib/amchart/themes/animated.js"></script>
     <script src="~/js/vm/patient-index.js"></script>
     <script type="text/javascript">
+         var dataEndpoint = "@Url.Action("GetPatient", "ChartData")";
         $(function () {
             ctsFunctions.init();
-            ctsFunctions.loadChart();
         });
     </script>
 }

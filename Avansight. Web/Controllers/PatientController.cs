@@ -43,5 +43,19 @@ namespace Avansight._Web.Controllers
             }
             return View();
         }
+
+        [HttpPost]
+        public JsonResult GetPatient(SubjectFilters subjectFilters)
+        {
+            var transform = _patientService.GetAll(subjectFilters);
+            var results = from p in transform
+                          group p by p.Gender into g
+                          select new { Gender = ((Gender)g.Key).ToString(), Count = g.Count()};
+            
+            var jsonResult = Json(results);
+            return Json(jsonResult);
+        }
+
+
     }
 }

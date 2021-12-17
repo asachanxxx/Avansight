@@ -1,4 +1,5 @@
 ﻿using Avansight.Domain;
+using Avansight.Domain.Enums;
 using Avansight.Domain.Factories;
 using Avansight.Domain.ViewModels;
 using Dapper;
@@ -12,17 +13,29 @@ namespace Avansight.Service.Implimentation
 {
     public class PatientService : IPatientService
     {
-        GenaricDataAccessService<PatientService> _service;
+        GenaricDataAccessService<Patient> _service;
         public PatientService(IConfiguration configuration)
         {
-            _service = new GenaricDataAccessService<PatientService>(configuration);
+            _service = new GenaricDataAccessService<Patient>(configuration);
         }
 
-        public List<PatientService> GetAll()
+        public List<Patient> GetAll(SubjectFilters subjectFilters)
         {
-            return _service.Query<PatientService>("", null, commandType: System.Data.CommandType.StoredProcedure).ToList();
-        }
 
+            /*TODO
+             * Extract gender ALl , Male , FeMale parameters
+             * Extract TreatmentCode ALl , .... 
+             * And pass to the Parameters
+            */
+
+            ///Had passed mock parameters
+            var queryParameters = new DynamicParameters();
+            queryParameters.Add("@StudyId", subjectFilters.StudyId);
+            queryParameters.Add("@TreatmentCode", null);
+            queryParameters.Add("@Age", subjectFilters.Age);
+            queryParameters.Add("@Gender", null);
+            return _service.Query<Patient>("[cts].[Sp_PatientGet]", queryParameters, commandType: System.Data.CommandType.StoredProcedure).ToList();
+        }
         public bool PatientsSet(List<Patient> patients)
         {
             var dataTable = DataTableFactory.GetPatientTable();
@@ -118,6 +131,5 @@ namespace Avansight.Service.Implimentation
             var p = globalPatients;
             return globalPatients;
         }
-
     }
 }

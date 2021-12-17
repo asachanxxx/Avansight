@@ -1,11 +1,22 @@
-﻿console.log("StudySelector Page Loaded");
-
-
-var ctsFunctions = (function () {
+﻿var ctsFunctions = (function () {
     var $container,
         $subjectSelector,
         $yearSlider,
-        $chktgSelectTGroup
+        $chktgSelectTGroup,
+        $chkGenSelect,
+        $btnCancel,
+        $btnApply,
+        patientData,
+        person,
+        chart,
+        selectedTreatments,
+        selectedTreatmentsAll,
+        selectedGenders,
+        selectedGendersAll,
+        ageFrom,
+        ageTo
+
+
 
     function init() {
         $container = $('.study-selector-container');
@@ -13,195 +24,167 @@ var ctsFunctions = (function () {
         $btnMenuToggl = $container.find('.btn-menu-toggle');
         $yearSlider = $(".year-slider");
         $chktgSelectTGroup = $container.find('.chktg-selectTGroup');
+        $chkGenSelect = $container.find('.chkGen-select');
+        $btnCancel = $container.find('.btn-cancel');
+        $btnApply = $container.find('.btn-apply');
+        selectedTreatments = [];
+        selectedGenders = [];
+        selectedTreatmentsAll = false;
+        selectedGendersAll = false;
+        ageFrom = 20;
+        ageTo = 31;
+
 
         $subjectSelector.toggle();
         $btnMenuToggl.click(function () {
-            console.log("$subjectSelector = ", $subjectSelector);
             $subjectSelector.toggle('show');
         });
 
-        initSlider($chktgSelectTGroup);
+        $btnCancel.click(function () {
+            $subjectSelector.toggle();
+        });
+
+        $btnApply.click(function () {
+            //create Age map for date range
+            var ageMap = {
+                ageFrom: ageFrom,
+                ageTo: ageTo
+            }
+            //create Person object to pass data
+            person = {
+                StudyId: 1,
+                TreatmentCode: selectedTreatments,
+                Age: null,
+                Gender: selectedGenders
+            }
+            //Trigger Ajax call 
+            getPatient();
+        });
+
+        initUiControllers();
+
+        person = {
+            StudyId: 1,
+            TreatmentCode: selectedGenders,
+            Age: null,
+            Gender: selectedTreatments
+        }
+
+        getPatient();
+        loadChart();
+        
     }
 
     function onChange(checkboxes, checkedState) {
-        var html = "<p>Changed:<br/>";
-
-        for (var i = 0; i < checkboxes.length; i++) {
-            var box = checkboxes[i];
-            var line = box.attr("id") + " : " + (box.prop("checked") ? "checked" : "unchecked") + "<br/>";
-
-            html += line;
+        if (checkedState == "all") {
+            selectedTreatmentsAll = true;
+            for (var i = 0; i < checkboxes.length; i++) {
+                selectedTreatments.push(checkboxes[i].attr("id"));
+            }
+        } else {
+            selectedTreatmentsAll = false;
+            var box = checkboxes[0];
+            if (box.prop("checked")) {
+                selectedTreatments.push(box.attr("id"));
+            } else {
+                const index = selectedTreatments.indexOf(box.attr("id"));
+                if (index > -1) {
+                    selectedTreatments.splice(index, 1);
+                }
+            }
         }
-
-        html += ("</p><p>Checked state of group is: " + checkedState + "</p>");
-
-        $("#log").html(html);
     }
 
-    function initSlider(chktgSelectTGroup) {
+    function onChangechkGen(checkboxes, checkedState) {
+        if (checkedState == "all") {
+            selectedGendersAll = true;
+            for (var i = 0; i < checkboxes.length; i++) {
+                selectedGenders.push(checkboxes[i].attr("id"));
+            }
+        } else {
+            selectedGendersAll = false;
+            var box = checkboxes[0];
+            if (box.prop("checked")) {
+                selectedGenders.push(box.attr("id"));
+            } else {
+                const index = selectedGenders.indexOf(box.attr("id"));
+                if (index > -1) {
+                    selectedGenders.splice(index, 1);
+                }
+            }
+        }
+    }
+
+    function initUiControllers() {
         $chktgSelectTGroup.selectAllCheckbox({
             checkboxesName: "chktg",
             onChangeCallback: onChange
         });
 
+        $chkGenSelect.selectAllCheckbox({
+            checkboxesName: "chkGen",
+            onChangeCallback: onChangechkGen
+        });
+
         $yearSlider.ionRangeSlider({
             type: "double",
-            min: 0,
-            max: 1000,
-            from: 200,
-            to: 500,
+            min: 20,
+            max: 71,
+            from: 20,
+            to: 31,
             grid: true,
-
-            onStart: function (data) {
-                console.log(data.input);        // jQuery-link to input
-            },
             onChange: function (data) {
-                console.log(data.from);
+                ageFrom = data.from;
             },
 
             onFinish: function (data) {
-                console.log(data.to);
+                ageTo = data.to;
             },
-
-            onUpdate: function (data) {
-                console.log(data.from_percent);
-            }
         });
     }
-
     function loadChart() {
-        // Create root element
-        // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-        var root = am5.Root.new("chartdiv");
+        am4core.useTheme(am4themes_animated);
 
-
-        // Set themes
-        // https://www.amcharts.com/docs/v5/concepts/themes/
-        root.setThemes([
-            am5themes_Animated.new(root)
-        ]);
-
-
-        // Create chart
-        // https://www.amcharts.com/docs/v5/charts/xy-chart/
-        var chart = root.container.children.push(am5xy.XYChart.new(root, {
-            panX: false,
-            panY: false,
-            wheelX: "panX",
-            wheelY: "zoomX",
-            layout: root.verticalLayout
-        }));
-
-        // Add scrollbar
-        // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
-        chart.set("scrollbarX", am5.Scrollbar.new(root, {
-            orientation: "horizontal"
-        }));
-
-        var data = [{
-            "year": "2021",
-            "europe": 2.5,
-            "namerica": 2.5,
-            "asia": 2.1,
-            "lamerica": 1,
-            "meast": 0.8,
-            "africa": 0.4
-        }, {
-            "year": "2022",
-            "europe": 2.6,
-            "namerica": 2.7,
-            "asia": 2.2,
-            "lamerica": 0.5,
-            "meast": 0.4,
-            "africa": 0.3
-        }, {
-            "year": "2023",
-            "europe": 2.8,
-            "namerica": 2.9,
-            "asia": 2.4,
-            "lamerica": 0.3,
-            "meast": 0.9,
-            "africa": 0.5
-        }]
-
-
+        // Create chart instance
+        chart = am4core.create("chartdiv", am4charts.XYChart);
+        // Add data
+        chart.data = patientData;
         // Create axes
-        // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-        var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
-            categoryField: "year",
-            renderer: am5xy.AxisRendererX.new(root, {}),
-            tooltip: am5.Tooltip.new(root, {})
-        }));
+        var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.dataFields.category = "gender";
+        categoryAxis.renderer.grid.template.location = 0;
+        //categoryAxis.renderer.minGridDistance = 30;
 
-        xAxis.data.setAll(data);
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
-        var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-            min: 0,
-            max: 100,
-            numberFormat: "#'%'",
-            strictMinMax: true,
-            calculateTotals: true,
-            renderer: am5xy.AxisRendererY.new(root, {})
-        }));
+        // Create series
+        var series = chart.series.push(new am4charts.ColumnSeries());
+        series.dataFields.valueY = "count";
+        series.dataFields.categoryX = "gender";
 
-
-        // Add legend
-        // https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
-        var legend = chart.children.push(am5.Legend.new(root, {
-            centerX: am5.p50,
-            x: am5.p50
-        }));
-
-
-        // Add series
-        // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-        function makeSeries(name, fieldName) {
-            var series = chart.series.push(am5xy.ColumnSeries.new(root, {
-                name: name,
-                stacked: true,
-                xAxis: xAxis,
-                yAxis: yAxis,
-                valueYField: fieldName,
-                valueYShow: "valueYTotalPercent",
-                categoryXField: "year"
-            }));
-
-            series.data.setAll(data);
-
-            // Make stuff animate on load
-            // https://www.amcharts.com/docs/v5/concepts/animations/
-            series.appear();
-
-            series.bullets.push(function () {
-                return am5.Bullet.new(root, {
-                    sprite: am5.Label.new(root, {
-                        text: "{valueYTotalPercent.formatNumber('#.#')}%",
-                        fill: root.interfaceColors.get("alternativeText"),
-                        centerY: am5.p50,
-                        centerX: am5.p50,
-                        populateText: true
-                    })
-                });
-            });
-
-            legend.data.push(series);
-        }
-
-        makeSeries("Europe", "europe");
-        makeSeries("North America", "namerica");
-        makeSeries("Asia", "asia");
-        makeSeries("Latin America", "lamerica");
-        makeSeries("Middle East", "meast");
-        makeSeries("Africa", "africa");
-
-
-        // Make stuff animate on load
-        // https://www.amcharts.com/docs/v5/concepts/animations/#Forcing_appearance_animation
-        chart.appear(1000, 100);
     }
-
-    function hideSelectorMenu() {
-
+    function getPatient() {
+        $.ajax({
+            type: "POST",
+            url: dataEndpoint,
+            data: JSON.stringify(person),
+            contentType: 'application/json',
+            success: function (response) {
+                console.log("response ", response);
+                //save data for future use if any
+                patientData = response;
+                //assign data to chat data object
+                chart.data = response;
+                //Refresh the chart 
+                chart.invalidateData();
+            },
+            failure: function (response) {
+                console.error(response.responseText);
+            },
+            error: function (response) {
+                console.error(response.responseText);
+            }
+        });
     }
 
     return {

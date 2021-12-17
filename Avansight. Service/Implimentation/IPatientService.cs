@@ -6,7 +6,7 @@ namespace Avansight.Service.Implimentation
 {
     public interface IPatientService
     {
-        List<PatientService> GetAll();
+        List<Patient> GetAll(SubjectFilters subjectFilters);
         List<Patient> ProcessPatients(PatientViewModel patientViewModel);
         bool PatientsSet(List<Patient> patients);
     }
