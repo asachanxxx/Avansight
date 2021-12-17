@@ -6,6 +6,8 @@
         $chkGenSelect,
         $btnCancel,
         $btnApply,
+        $rdoAllages,
+        $rdobetween,
         patientData,
         person,
         chart,
@@ -14,7 +16,8 @@
         selectedGenders,
         selectedGendersAll,
         ageFrom,
-        ageTo
+        ageTo,
+        allAgesFlag
 
 
 
@@ -27,12 +30,15 @@
         $chkGenSelect = $container.find('.chkGen-select');
         $btnCancel = $container.find('.btn-cancel');
         $btnApply = $container.find('.btn-apply');
+        $rdoAllages = $container.find('.rdo-allages');
+        $rdobetween = $container.find('.rdo-between');
         selectedTreatments = [];
         selectedGenders = [];
         selectedTreatmentsAll = false;
         selectedGendersAll = false;
         ageFrom = 20;
-        ageTo = 31;
+        ageTo = 71;
+        allAgesFlag = true;
 
 
         $subjectSelector.toggle();
@@ -44,17 +50,28 @@
             $subjectSelector.toggle();
         });
 
-        $btnApply.click(function () {
-            //create Age map for date range
-            var ageMap = {
-                ageFrom: ageFrom,
-                ageTo: ageTo
+        $rdoAllages.change(function () {
+            if (this.checked) {
+                allAgesFlag = true;
+                ageFrom = 20;
+                ageTo = 71;
             }
+        });
+
+        $rdobetween.change(function () {
+            console.log("this.checked", this.checked);
+            if (this.checked) {
+                allAgesFlag = false;
+            }
+        });
+
+        $btnApply.click(function () {
             //create Person object to pass data
             person = {
                 StudyId: 1,
                 TreatmentCode: selectedTreatments,
-                Age: null,
+                MinAge: ageFrom,
+                MaxAge: ageTo,
                 Gender: selectedGenders
             }
             //Trigger Ajax call 
@@ -66,7 +83,8 @@
         person = {
             StudyId: 1,
             TreatmentCode: selectedGenders,
-            Age: null,
+            MinAge: ageFrom,
+            MaxAge: ageTo,
             Gender: selectedTreatments
         }
 
@@ -131,14 +149,18 @@
             min: 20,
             max: 71,
             from: 20,
-            to: 31,
+            to: 71,
             grid: true,
             onChange: function (data) {
-                ageFrom = data.from;
+                if (!allAgesFlag) {
+                    ageFrom = data.from;
+                }
             },
 
             onFinish: function (data) {
-                ageTo = data.to;
+                if (!allAgesFlag) {
+                    ageTo = data.to;
+                }
             },
         });
     }

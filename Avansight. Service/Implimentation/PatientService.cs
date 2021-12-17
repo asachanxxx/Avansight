@@ -32,7 +32,8 @@ namespace Avansight.Service.Implimentation
             var queryParameters = new DynamicParameters();
             queryParameters.Add("@StudyId", subjectFilters.StudyId);
             queryParameters.Add("@TreatmentCode", null);
-            queryParameters.Add("@Age", subjectFilters.Age);
+            queryParameters.Add("@MinAge", subjectFilters.MinAge);
+            queryParameters.Add("@MaxAge", subjectFilters.MaxAge);
             queryParameters.Add("@Gender", null);
             return _service.Query<Patient>("[cts].[Sp_PatientGet]", queryParameters, commandType: System.Data.CommandType.StoredProcedure).ToList();
         }

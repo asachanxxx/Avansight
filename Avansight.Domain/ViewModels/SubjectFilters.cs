@@ -9,7 +9,8 @@ namespace Avansight.Domain.ViewModels
     {
         public int StudyId { get; set; }
         public List<string> TreatmentCode { get; set; }
-        public string Age { get; set; }
+        public int MinAge { get; set; }
+        public int MaxAge { get; set; }
         public List<string> Gender { get; set; }
     }
 }
