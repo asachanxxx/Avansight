@@ -4,7 +4,7 @@
 var ctsFunctions = (function () {
     var $studyItems,
         $btnImport,
-        $fileUpload,
+        $fileUpload
        
 
     function init() {
@@ -35,7 +35,7 @@ var ctsFunctions = (function () {
                 },
                 success: function (repo) {
                     if (repo.status == "success") {
-                        alert("File : " + repo.filename + " is uploaded successfully");
+                        alert("File is uploaded successfully");
                     }
                 },
                 error: function () {
@@ -48,7 +48,7 @@ var ctsFunctions = (function () {
     function template(response) {
         $studyItems.empty();
         var grouped = groupByCategory(response);
-        console.log("grouped :- ", grouped);
+        //console.log("grouped :- ", grouped);
         for (var k in grouped) {
             $studyItems.append(`
            <div class="col-6">

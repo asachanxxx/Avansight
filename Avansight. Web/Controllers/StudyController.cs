@@ -34,7 +34,6 @@ namespace Avansight._Web.Controllers
         public IActionResult Index(int StudyId)
         {
             HttpContext.Session.SetObjectAsJson("studyObject", _studyService.GetStudy(StudyId));
-            var sessionStudy = HttpContext.Session.GetObjectFromJson<Study>("studyObject");
             return View();
         }
 
