@@ -19,6 +19,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\lib\ion-rangeSlider\" />
     <Folder Include="wwwroot\lib\amchart\" />
+    <Folder Include="wwwroot\mediaUpload\" />
   </ItemGroup>
 
 </Project>

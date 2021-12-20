@@ -26,6 +26,7 @@ namespace Avansight._Web.Controllers
 
         public IActionResult Privacy()
         {
+            
             return View();
         }
 

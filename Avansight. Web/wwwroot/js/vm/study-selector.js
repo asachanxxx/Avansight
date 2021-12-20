@@ -2,11 +2,47 @@
 
 
 var ctsFunctions = (function () {
-    var $studyItems
+    var $studyItems,
+        $btnImport,
+        $fileUpload,
+       
 
     function init() {
-        $(".btn").toggle();
+        $(".btn-study").toggle();
         $studyItems = $(".studyItems");
+        $btnImport = $(".btn-import");
+        $fileUpload = $(".fileUpload");
+
+        $btnImport.click(function () {
+            $fileUpload.click();
+        });
+
+        $fileUpload.change(function () {
+            var files = $(this).prop("files");
+            formData = new FormData();
+            formData.append("MyUploader", files[0]);
+
+            jQuery.ajax({
+                type: 'POST',
+                url: "/Study/OnPostMyUploader",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                success: function (repo) {
+                    if (repo.status == "success") {
+                        alert("File : " + repo.filename + " is uploaded successfully");
+                    }
+                },
+                error: function () {
+                    alert("Error occurs");
+                }
+            });
+        });
     }
 
     function template(response) {
@@ -49,7 +85,7 @@ var ctsFunctions = (function () {
                                     ID: ${v.studyId}
                                 </div>
                                 <div class="col-md-8">
-                                    <a href="/Study/Index/${v.studyId}" class="btn btn-info btn-sm float-left">Navigate to Study</a>
+                                    <a href="/Study/Index/${v.studyId}" class="btn btn-info btn-sm btn-study float-left">Navigate to Study</a>
                                 </div>
                             </div>
                         </div>

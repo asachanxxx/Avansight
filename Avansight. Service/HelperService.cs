@@ -18,11 +18,16 @@ namespace Avansight.Service
                 {
                     ConfigureDataTable = _ => new ExcelDataTableConfiguration
                     {
-                        UseHeaderRow = true
+                        UseHeaderRow = false,
+                        ReadHeaderRow = (rowReader) => {
+                            rowReader.Read();
+                        },
                     }
                 };
                 return reader.AsDataSet(conf);
             }
+
+
         }
     }
 }
